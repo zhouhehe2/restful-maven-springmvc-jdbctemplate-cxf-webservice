@@ -23,8 +23,8 @@
     </jaxrs:extensionMappings>
 
     <jaxrs:serviceBeans>
-      <ref bean="picRepositoryService" />
-       <ref bean="showPicService" />
+      <ref bean="picRepositoryRestService" />
+       <ref bean="showPicRestService" />
     </jaxrs:serviceBeans>
 
     <jaxrs:inInterceptors>

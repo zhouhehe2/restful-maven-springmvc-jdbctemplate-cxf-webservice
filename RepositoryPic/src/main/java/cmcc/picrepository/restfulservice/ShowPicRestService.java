@@ -1,21 +1,16 @@
-package cmcc.picrepository.service;
+package cmcc.picrepository.restfulservice;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.File; 
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.Produces; 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response;  
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component; 
 
 
 /**
@@ -27,9 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Path(value = "/showPic")
 @Produces({ MediaType.APPLICATION_XML}) 
 @Consumes({ MediaType.APPLICATION_XML})
-@Service
-@Transactional
-public class ShowPicService {
+@Component
+public class ShowPicRestService {
 
 	@GET
 	@Produces("image/*")

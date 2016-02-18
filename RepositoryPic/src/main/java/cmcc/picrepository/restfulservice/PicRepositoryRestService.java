@@ -1,4 +1,4 @@
-package cmcc.picrepository.service;
+package cmcc.picrepository.restfulservice;
  
 import javax.annotation.Resource;
 import javax.ws.rs.Consumes;
@@ -15,12 +15,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status; 
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;  
+import org.springframework.stereotype.Component; 
 
-import cmcc.picrepository.dao.PicRepositoryDao;
 import cmcc.picrepository.dto.PicRepository;
 import cmcc.picrepository.dto.PicRepositorys;
+import cmcc.picrepository.webservice.PicRepositorySoapService;
  
 
 /**
@@ -31,19 +30,18 @@ import cmcc.picrepository.dto.PicRepositorys;
  */
 @Path(value = "/picRepository")
 @Produces({ MediaType.APPLICATION_XML}) 
-@Consumes({ MediaType.APPLICATION_XML})
-@Service
-@Transactional
-public class PicRepositoryService {
-
+@Consumes({ MediaType.APPLICATION_XML}) 
+@Component 
+public class PicRepositoryRestService {
+ 
 	@Resource
-	PicRepositoryDao picRepositoryDao; 
+	PicRepositorySoapService picRepositorySoapService;
 	
 	@GET
 	 @Produces({ MediaType.APPLICATION_XML})  
-	@Path("/get/{picRepositoryId}")
-	public PicRepository getPicRepository(@PathParam("picRepositoryId")int   picRepositoryId) {
-		PicRepository picRepository =picRepositoryDao.getPicRepositoryById(picRepositoryId);
+	@Path("/users/{userId}/pics/{picRepositoryId}")
+	public PicRepository getPicRepository(@PathParam("userId")int userId,@PathParam("picRepositoryId")int picRepositoryId) {
+		PicRepository picRepository =picRepositorySoapService.get(picRepositoryId);
 		if (picRepository == null) {
 			ResponseBuilder builder = Response.status(Status.NOT_FOUND);
 			builder.type("application/xml");
@@ -59,7 +57,7 @@ public class PicRepositoryService {
 	@Consumes({ MediaType.APPLICATION_XML})
 	@Path("/add")
 	public Response addPicRepository(PicRepository picRepository) {
-		picRepositoryDao.savePicRepository(picRepository);
+		picRepositorySoapService.add(picRepository);
 		return Response.ok(picRepository).build();
 	}
 
@@ -74,7 +72,6 @@ public class PicRepositoryService {
 	@Path("/put")
 	@Consumes({ MediaType.APPLICATION_XML})
 	public Response updatePicRepository(PicRepository picRepository) {
-		// TODO Auto-generated method stub 
 		return null;
 	}
 
@@ -82,7 +79,6 @@ public class PicRepositoryService {
 	@Path("/getAlls")
 	@Produces({ MediaType.APPLICATION_XML})
 	public PicRepositorys getPicRepositorys() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
